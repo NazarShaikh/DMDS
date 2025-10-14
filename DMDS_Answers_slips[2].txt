@@ -1,0 +1,576 @@
+---------slip 1--------
+Q1)
+
+v1<-c(1L,2L,3L,4L)
+v2<-c(5L,6L,7L,8L)
+cat("Addition :",v1+v2,"\n")
+cat("Substraction: ",v1-v2,"\n")
+cat("Multiply: ",v1*v2,"\n")
+cat("Division: ",v1/v2,"\n")
+
+Q2)
+
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+df=pd.read_csv(r"C:\Users\Admin\Desktop\DMDS Praact\student_scores.csv")
+x=df[['Hours']]  #independent variable
+y=df['Scores']   #dependent variable                              
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=34)                                     
+model=LinearRegression() #creating the linear regression model
+model.fit(x_train,y_train)
+y_pred=model.predict(x_test)
+mea=mean_absolute_error(y_test,y_pred)
+mse=mean_squared_error(y_test,y_pred)
+rmse=np.sqrt(mse)
+print("Mean Absolute Error:", mea)
+print("Mean Squared Error:", mse)
+print("Root Mean Squared Error:", rmse)
+
+------------------------------slip 2-------------------------------------------
+
+Q1)
+
+num=5
+cat("Multiplicaation Table of 5\n")
+for(i in 1:10)
+{
+    cat(num,"x",i,"=",num*i,"\n")
+}
+Q2)
+import pandas as pd
+import matplotlib.pyplot as mplt
+from sklearn.cluster import KMeans
+data={
+    'StudentID':[1,2,3,4,5,],
+    'Math':[85,78,90,95,88],
+    'Science':[92,80,85,88,90],
+    'English':[78,85,88,90,92]
+}
+df=pd.DataFrame(data)
+x=df[['Math','Science','English']].values
+k=2
+kmeans=KMeans(n_clusters=k, random_state=67)
+kmeans.fit(x)
+
+df['Cluster']=kmeans.labels_
+print(df)
+for i in range(k):
+    mplt.scatter(x[df['Cluster']==i,0],x[df['Cluster']==i,1],label=f'Cluster {i+1}')
+centroids=kmeans.cluster_centers_
+mplt.scatter(centroids[:,0],centroids[:,1],s=200,c='black',marker='X',label='Centroids')
+mplt.title("K-Means Clustering of Students Score")
+mplt.xlabel("Math Score")
+mplt.ylabel("Science Score")
+mplt.legend()
+mplt.show()
+
+--------------------slip 3-------------------------------------------------------
+Q1)
+num <- 123
+rev <- 0
+sum <- 0
+
+while (num > 0) {
+  r <- num %% 10       # get the last digit
+  num <- num %/% 10    # remove the last digit
+  rev <- rev * 10 + r  # build reversed number
+  sum <- sum + r       # add to sum
+}
+
+print(paste("Reversed number:", rev))
+print(paste("Sum of digits:", sum))
+
+Q2)
+import numpy as np
+from sklearn.linear_model import LinearRegression
+x=[0,1,2,3,4,5,6,7,8,9,11,13]
+y=[1,3,2,5,7,8,8,9,10,12,16,18]
+x=np.array(x)
+y=np.array(y)
+x_reshaped=x.reshape(-1,1)
+model=LinearRegression()
+model.fit(x_reshaped,y)
+print("y=",model.intercept_,"+",model.coef_[0],"x")
+
+---------------------------------slip 4----------------------------------------------
+Q1
+m1<-matrix(c(13,24,67,45,78),nrow=2,ncol=3)
+m2<-matrix(c(67,23,56,54,87),nrow=2,ncol=3)
+m1
+m2
+mat_sum=m1+m2
+cat("The sum of two matrix m1 & m2 are: ",mat_sum)
+
+Q2
+from sklearn.naive_bayes import CategoricalNB 
+from sklearn.preprocessing import LabelEncoder 
+
+weather = ['Sunny','Sunny','Overcast','Rainy','Rainy','Rainy','Overcast', 
+'Sunny','Sunny','Rainy','Sunny','Overcast','Overcast','Rainy'] 
+temp = ['Hot','Hot','Hot','Mild','Cool','Cool','Cool','Mild','Cool','Mild', 
+'Mild','Mild','Hot','Mild'] 
+play = ['No','No','Yes','Yes','Yes','No','Yes','No','Yes','Yes','Yes', 
+'Yes','Yes','No'] 
+
+le_weather = LabelEncoder() 
+le_temp = LabelEncoder() 
+le_play = LabelEncoder() 
+
+weather_encoded = le_weather.fit_transform(weather)  
+temp_encoded = le_temp.fit_transform(temp)          
+play_encoded = le_play.fit_transform(play)     
+     
+features = list(zip(weather_encoded, temp_encoded)) 
+model = CategoricalNB() 
+model.fit(features, play_encoded) 
+predicted = model.predict([[0, 2]]) 
+result = le_play.inverse_transform(predicted) 
+print("Prediction for [Overcast, Mild]:", result[0])
+----------------------------Slip 5------------------------------------------------------------
+Q1)
+v1<-c(23,44,1,6,7)
+f1<-factor(v1)
+cat("Factor 1: ",f1,"\n")
+v2<-c(43,1,7,20,98)
+f2<-factor(v2)
+cat("Factor 2: ",f2,"\n")
+con_fact<-paste(f1,f2)
+cat("Concatenating both factors: ",con_fact)
+Q2)
+import numpy as np 
+from sklearn.datasets import load_diabetes 
+from sklearn.model_selection import train_test_split 
+from sklearn.tree import DecisionTreeClassifier 
+from sklearn.metrics import classification_report, accuracy_score 
+from sklearn.preprocessing import Binarizer 
+
+data = load_diabetes() 
+X = data.data 
+y_regression = data.target 
+ 
+threshold = np.median(y_regression) 
+y = Binarizer(threshold=threshold).fit_transform(y_regression.reshape(-1, 1)).ravel() 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) 
+clf = DecisionTreeClassifier(random_state=42) 
+clf.fit(X_train, y_train) 
+y_pred = clf.predict(X_test) 
+print("Accuracy:", accuracy_score(y_test, y_pred)) 
+print("\nClassification Report:\n", classification_report(y_test, y_pred)) 
+
+--------------------------------------Slip 6------------------------------------------------------
+Q1)
+employee_id <- c(101,102,101,103,104)
+employee_name <- c("Ram","Sham","Suraj","Neha","Suraj")
+data_frame <- data.frame(ID=employee_id, Name=employee_name)
+
+print("Data frame: ")
+print(data_frame)
+
+dupli_i <- data_frame[duplicated(data_frame$ID, ]
+print("Duplicated IDs & Names: ")
+print(dupli_i)
+
+dupli_n <- data_frame[duplicated(data_frame$Name), ]
+print("Duplicated Names: ")
+print(dupli_n)
+Q2)
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.cluster import AgglomerativeClustering
+import scipy.cluster.hierarchy as sch
+
+df = pd.read_csv(r"C:\Users\Admin\Desktop\DMDS Praact\customer.csv")
+
+X = df.iloc[:, [3, 4]].values
+
+plt.figure(figsize=(10, 6))
+dendrogram = sch.dendrogram(sch.linkage(X, method='ward'))
+plt.title("Dendrogram")
+plt.xlabel("Customers")
+plt.ylabel("Euclidean distances")
+plt.show()
+
+model = AgglomerativeClustering(n_clusters=5, metric='euclidean', linkage='ward')
+y_hc = model.fit_predict(X)
+
+plt.figure(figsize=(10, 6))
+plt.scatter(X[y_hc == 0, 0], X[y_hc == 0, 1], s=100, c='red', label='Cluster 1')
+plt.scatter(X[y_hc == 1, 0], X[y_hc == 1, 1], s=100, c='blue', label='Cluster 2')
+plt.scatter(X[y_hc == 2, 0], X[y_hc == 2, 1], s=100, c='green', label='Cluster 3')
+plt.scatter(X[y_hc == 3, 0], X[y_hc == 3, 1], s=100, c='cyan', label='Cluster 4')
+plt.scatter(X[y_hc == 4, 0], X[y_hc == 4, 1], s=100, c='magenta', label='Cluster 5')
+
+plt.title("Clusters of Customers (Hierarchical Clustering)")
+plt.xlabel("Annual Income (k$)")
+plt.ylabel("Spending Score (1-100)")
+plt.legend()
+plt.show()
+
+-----------------------------------------------------Slip 7--------------------------------------------------------
+Q1)
+num<-20:50
+print(num)
+mean_num<-mean(20:60)
+cat("Mean of the numbers from 20 to 60: ",mean_num)
+sum_num<-sum(51:91)
+cat("Sum of numbers from 51 to 91: ",sum_num)
+Q2)
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+x = np.array([1,2,3,4,5,6,7,8]).reshape((-1,1))  
+y = np.array([7,14,15,18,19,26,23,28])           
+model=LinearRegression()
+model.fit(x,y)
+b0=model.coef_[0]
+b1=model.intercept_
+print("Intercept (value of b0): ",b1)
+print("Slope (value of b1): ",b0)
+r2_score=model.score(x,y)
+print("R2 Score:: ",r2_score)
+
+-------------------------------------------------Slip 8---------------------------------------
+Q1)
+num<-10
+fib<-numeric(num)
+fib[1]<-0
+fib[2]<-1
+for(i in 3:num)
+{
+    fib[i]=fib[i-1]+fib[i-2]
+}
+cat("The fibanoic numbers till 10 are: ",fib)
+Q2)
+import pandas as pd 
+from sklearn.impute import SimpleImputer 
+from sklearn.preprocessing import MinMaxScaler 
+from sklearn.cluster import KMeans 
+
+df = pd.read_csv("CC GENERAL.csv") 
+df = df.drop(columns=["CUST_ID"]) 
+
+imputer = SimpleImputer(strategy="median") 
+df_imputed = pd.DataFrame(imputer.fit_transform(df), columns=df.columns) 
+scaler = MinMaxScaler() 
+df_scaled = pd.DataFrame(scaler.fit_transform(df_imputed), columns=df.columns) 
+kmeans = KMeans(n_clusters=5, random_state=42) 
+df_scaled["Cluster"] = kmeans.fit_predict(df_scaled) 
+df["Cluster"] = df_scaled["Cluster"] 
+print(df["Cluster"].value_counts()) 
+-----------------------------------------------------Slip 9--------------------------------------------------------
+Q1)
+empno<-c(101,102,103,104,105)
+empname<-c("Valeria","Varsache","Gigi","Kendal","Jenefer")
+empsal<-c(20000,56000,50000,80000,98000)
+empdesg<-c("Intern","Sales Director","Employee","HR","President Assistance")
+emp_det<-data.frame(No=empno,Name=empname,Sal=empsal,Desg=empdesg)
+print("Employee Details")
+print(emp_det)
+Q2)
+import pandas as pd
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score,precision_score,recall_score
+cancer=load_breast_cancer()
+x=cancer.data 
+y=cancer.target  
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=45)
+svm_model=SVC(kernel='linear',random_state=45)
+svm_model.fit(x_train,y_train)
+y_pred=svm_model.predict(x_test)
+accuracy=accuracy_score(y_test,y_pred)
+precision=precision_score(y_test,y_pred)
+recall=recall_score(y_test,y_pred)
+print(f"Accuracy: {accuracy}")
+print(f"Precision: {precision}")
+print(f"Recall: {recall}")
+
+-----------------------------------------------------Slip 10--------------------------------------------------------
+Q1)
+v<-c(12,78,56,90,1)
+max_vect<-max(v)
+cat("The maximum vector is: ",max_vect,"\n")
+min_vect<-min(v)
+cat("The minimum vector is: ",min_vect)
+Q2)
+import pandas as pd
+import numpy as np
+from apyori import apriori
+
+df = pd.read_csv("Iries.csv")
+df.head()
+print("Shape of dataset:", np.shape(df))
+
+records = []
+for i in range(0, len(df)):
+    records.append([str(df.values[i, j]) 
+for j in range(0, df.shape[1])])
+
+rules = apriori(records, min_support=0.003, min_confidence=0.2, min_lift=3,  min_length=2)
+
+results = list(rules)
+
+for item in results:
+    pair = item.items
+    items = [x for x in pair]
+    if len(items) >= 2:
+        print("Rule: " + " -> ".join(items))
+        print("Support: " + str(item.support))
+        for stat in item.ordered_statistics:
+            print("Confidence: " + str(stat.confidence))
+            print("Lift: " + str(stat.lift))
+        print("=====================================")
+
+-----------------------------------------------------Slip 11--------------------------------------------------------
+Q1)
+A<-list("x","y","z")
+B<-list("X","Y","Z","x","y")
+v1<-unlist(A)
+v2<-unlist(B)
+not_in<-setdiff(v1,v2)
+cat("Elements in list1 not in list2: \n",not_in)
+Q2)
+import pandas as pd
+import matplotlib.pyplot as plt
+import scipy.cluster.hierarchy as sch
+from sklearn.cluster import AgglomerativeClustering
+
+data = pd.read_csv("Wholesale customers data.csv")
+X = data.iloc[:, [2, 3]].values
+
+dendrogram = sch.dendrogram(sch.linkage(X, method='ward'))
+plt.title('Dendrogram')
+plt.xlabel('Customers')
+plt.ylabel('Euclidean Distances')
+plt.show()
+
+hc = AgglomerativeClustering(n_clusters=5, affinity='euclidean', linkage='ward')
+y_hc = hc.fit_predict(X)
+
+plt.scatter(X[y_hc == 0, 0], X[y_hc == 0, 1], label='Cluster 1')
+plt.scatter(X[y_hc == 1, 0], X[y_hc == 1, 1], label='Cluster 2')
+plt.scatter(X[y_hc == 2, 0], X[y_hc == 2, 1], label='Cluster 3')
+plt.scatter(X[y_hc == 3, 0], X[y_hc == 3, 1], label='Cluster 4')
+plt.scatter(X[y_hc == 4, 0], X[y_hc == 4, 1], label='Cluster 5')
+
+plt.title('Hierarchical Clustering')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+plt.legend()
+plt.show()
+
+-----------------------------------------------------Slip 12--------------------------------------------------------
+Q1)
+empno<-c(101,102,103,104,105)
+empname<-c("Valeria","Varsache","Gigi","Kai","Jay")
+empage<-c(30,50,22,23,34)
+empgen<-c("Female","Female","Female","Male","Male")
+empdesg<-c("Intern","Sales Director","Employee","HR","President Assistance")
+emp_det<-data.frame(No=empno,Name=empname,Gender=empgen,Age=empage,Desg=empdesg)
+print("Employee Details")
+print(emp_det)
+Q2)
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+df=pd.read_csv("data.csv")
+x=df[['weight','volume']]
+y=df['CO2']
+li_reg=LinearRegression()
+li_reg.fit(x,y)
+predicted_CO2=li_reg.predict([[3300,1300]])
+print(predicted_CO2)
+
+-----------------------------------------------------Slip 13--------------------------------------------------------
+Q1)
+digits<-c(1,2,3,4,5,6)
+freq<-c(7,2,6,3,4,8)
+pie(freq,
+main="Frequency of getting each number on dice",
+labels=digits,
+col=rainbow(length(freq)))
+legend("topleft",
+legend=paste("Digit",digits),
+fill=rainbow(length(freq)))
+Q2)
+import pandas as pd
+data=pd.read_csv("StudentsPerformance.csv")
+print("Shape of the dataset: ",data.shape)
+print("\nTop of the dataset: ",data.head())
+
+-----------------------------------------------------Slip 14--------------------------------------------------------
+Q1)
+employee_name<-list("Suraj","Pooja","Rutesh","Ayesha")
+print("The employee names: ")
+print(employee_name)
+employee_name<-append(employee_name,"Harsha")
+print(employee_name)
+employee_name[2]<-NULL
+print(employee_name)
+Q2)
+import numpy as np
+import pandas as pd
+from apyori import apriori
+
+dataset = pd.read_csv("Groceries.csv")
+
+records = []
+for i in range(0, 50):
+    records.append([str(dataset.values[i, j]) for j in range(0, 3)])
+
+rules = apriori(records, min_support=0.003, min_confidence=0.2, min_lift=3, min_length=2)
+
+results = list(rules)
+
+print(len(results))
+print(results[0])
+
+for item in results:
+    pair = item[0]
+    items = [x for x in pair]
+    print("Rule: " + items[0] + " -> " + items[1])
+    print("Support: ", str(item[1]))
+    print("Confidence: ", str(item[2][0][2]))
+    print("=" * 30)
+
+-----------------------------------------------------Slip 15--------------------------------------------------------
+Q1)
+Same as Slip 1 (Q1)
+Q2)
+import pandas as pd
+from sklearn import tree
+
+data = pd.read_csv("shows.csv")
+X = data[['Age', 'Experience', 'ComedyRanking']]
+y = data['Class']
+
+model = tree.DecisionTreeClassifier()
+model = model.fit(X, y)
+
+prediction = model.predict([[40, 10, 7]])
+print(prediction[0])
+
+-----------------------------------------------------Slip 16--------------------------------------------------------
+Q1)
+Year<-c(2001,2002,2003)
+Export<-c(26,32,35)
+Import<-c(35,40,50)
+data<-rbind(Export,Import) #Combines the two vectors row-wise into a matrix.
+barplot(data,
+main="Export and Import Data(2001-2003)",
+xlab="Year",
+ylab="Values",
+names.arg=Year,
+border="Blue",
+col=c("Pink","lightblue"),
+beside=TRUE)
+legend("topleft",
+       legend=c("Export","Import"),
+       fill=c("Pink","lightblue"),
+       border="Blue")
+Q2)
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+data = pd.read_csv("diabetes.csv")
+X = data.drop('Outcome', axis=1)
+y = data['Outcome']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+model = DecisionTreeClassifier()
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+print(accuracy_score(y_test, y_pred))
+
+-----------------------------------------------------Slip 17--------------------------------------------------------
+Q1)
+num<-20
+fib<-numeric(num)
+fib[1]<-0
+fib[2]<-1
+for(i in 3:num) #i starts from 3 & goes up to 20
+{
+    fib[i]<-fib[i-1]+fib[i-2] #It adds the previous two fibnoic numbers
+}
+print("First 20 fibnoic numbers: ")
+print(fib)
+Q2)
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+Stock_Market = {
+    'Year': [2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,
+             2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016],
+    'Month': [12,11,10,9,8,7,6,5,4,3,2,1,12,11,10,9,8,7,6,5,4,3,2,1],
+    'Interest_Rate': [2.75,2.5,2.5,2.5,2.5,2.5,2.5,2.25,2.25,2.25,2,2,
+                      2,1.75,1.75,1.75,1.75,1.75,1.75,1.75,1.75,1.75,1.75,1.75],
+    'Unemployment_Rate': [5.3,5.3,5.3,5.3,5.4,5.6,5.5,5.5,5.5,5.6,5.7,5.9,
+                          6,5.9,5.8,6.1,6.2,6.1,6.1,6.1,5.9,6.2,6.2,6.1],
+    'Stock_Index_Price': [1464,1394,1357,1293,1256,1254,1234,1195,1159,1167,
+                          1130,1075,1047,965,943,958,971,949,884,866,876,822,704,719]
+}
+
+df = pd.DataFrame(Stock_Market)
+
+X = df[['Year','Month','Interest_Rate','Unemployment_Rate']]
+y = df['Stock_Index_Price']
+
+model = LinearRegression()
+model.fit(X, y)
+
+y_pred = model.predict(X)
+
+plt.scatter(df['Interest_Rate'], df['Stock_Index_Price'], color='blue')
+plt.plot(df['Interest_Rate'], y_pred, color='red')
+plt.xlabel('Interest Rate')
+plt.ylabel('Stock Index Price')
+plt.title('Stock Index Price vs Interest Rate')
+plt.show()
+
+-----------------------------------------------------Slip 18--------------------------------------------------------
+Q1)
+v<-c(12,78,56,90,1)
+max_vect<-max(v)
+cat("The maximum vector is: ",max_vect,"\n")
+min_vect<-min(v)
+cat("The minimum vector is: ",min_vect)
+
+Q2)
+Same as Slip 7(Q2)
+
+-----------------------------------------------------Slip 19--------------------------------------------------------
+Q1)
+
+stu_roll<-c(101,102,103,104,105)
+stu_name<-c("Payal","Vishu","Gigi","Kai","Jay")
+stu_add<-c("Chikali","chinchwad","Acordi","Pune","Bhosri")
+stu_mark<-c(45,90,56,66,85)
+stu_det<-data.frame(RollNo=stu_roll,Student_Name=stu_name,Address=stu_add,Marks=stu_mark)
+print("Student Details")
+print(stu_det)
+
+Q2)
+Same as Slip 12(Q2)
+
+-----------------------------------------------------Slip 20--------------------------------------------------------
+
+Q1)
+
+empno<-c(101,102,103,104,105)
+empname<-c("Valeria","Varsache","Gigi","Kendal","Jenefer")
+empsal<-c(20000,56000,50000,80000,98000)
+empdesg<-c("Intern","Sales Director","Employee","HR","President Assistance")
+emp_det<-data.frame(No=empno,Name=empname,Sal=empsal,Desg=empdesg)
+print("Employee Details")
+print(emp_det)
+Q2)
+It is their above.
