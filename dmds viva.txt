@@ -1,0 +1,38 @@
+R-programming is wide used for data analytics, statistical computing and graphics
+
+data mining - is use to find useful patterns, trends and information from large data sets
+
+steps in hierarchical clustering - def(groups data points into nested clusters by creating a tree-like structure called a dendrogram)
+Compute the pairwise distances between all data points.
+Common distance metrics:
+Euclidean distance
+Manhattan distance
+Cosine distance
+
+python is high level simple and beginner friendly programming language, used widely for development, data anytics and automation .
+
+k-means is used to partition unlabeled data into k distincts
+
+reshape is used to change the shape of an array without altering its data.
+
+In a linear regression equation ((y=b_{0}+b_{1}x)), (b_{0}) is the y-intercept, which is the predicted value of \(y\) when \(x\) is zero. \(b_{1}\) is the slope coefficient, which represents the average change in y
+
+naive bayes= is a simple probabilistic classifier , supervised learning algorithm for classification 
+
+supervised learning - uses labeled data to train a model for making predictions
+unsupervised learning - uses unlabeled data to find hidden patterns and structures.
+
+labelEncode - used to convert categorical data into numeric format.
+
+svm= support vector machine , hyperplane that best separated different classes
+
+regression - is used to find relation ship between independent and dependent values
+
+clustering - is used to divide data into groups.
+types 1- hierarchical , 2 agglomerative
+
+apriory algorithm- find frequent itemset and generate association rule by identifying relationships between large data sets
+
+association rule - discovers interesting "if-then" relationships and correlations between items in large datasets.
+
+data preprocessing - the process of transforming raw data into a clean, structured, and suitable format for training machine learning models.
